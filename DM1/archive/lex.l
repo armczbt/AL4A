@@ -1,6 +1,3 @@
-%{
-#include <stdio.h>
-%}
 
 %option noyywrap
 %option noinput
