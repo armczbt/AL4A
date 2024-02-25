@@ -19,7 +19,7 @@ rm lex.c
 
 
 for f in samples/*.c; do
-  ./lex $f > $TMP
+  ./lex < $f > $TMP
   diff $TMP $f.out || err "invalid test $f"
 done
 

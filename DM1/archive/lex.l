@@ -6,6 +6,9 @@
 
 %%
 
+"//"(.)*\n   ; 
+"/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+"/" ;
+
 
 "if" {printf("tIF\n");}
 "else" {printf("tELSE\n");}
@@ -26,26 +29,32 @@
 "==" {printf("tEQ\n");}
 "<=" {printf("tLE\n");}
 ">=" {printf("tGE\n");}
-"=" {printf("tAFFECTATION\n");}
+"=" {printf("tASSIGN\n");}
 "&&" {printf("tAND\n");}
 "||" {printf("tOR\n");}
 "!" {printf("tNOT\n");}
 "{" {printf("tLBRACE\n");}
 "}" {printf("tRBRACE\n");}
-"(" {printf("tLPAREN\n");}
-")" {printf("tRPAREN\n");}
+"(" {printf("tLPAR\n");}
+")" {printf("tRPAR\n");}
 ";" {printf("tSEMI\n");}
-"," {printf("tCOMA\n");}
+"," {printf("tCOMMA\n");}
 
 
 [a-zA-Z][a-zA-Z0-9]* {printf("tID: '%s'\n", yytext);}
 
 
-([0-9]+|0[xX][0-9a-fA-F]+) {printf("tNB: '%s'\n", yytext);}
+[0-9]+ {
+    int dec = atoi(yytext);
+    printf("tNB: '%s[0x%x]'\n", yytext, dec);
+}
+0[xX][0-9a-fA-F]+ {
+    int dec = (int)strtol(yytext, NULL, 0);
+    printf("tNB: '%d[%s]'\n", dec, yytext);
+}
 
 
-"//"([^'\n']|\\')*'\n'  ; 
-"/*"([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+"/" ;
+
 
 
 [ \t\n] ;
